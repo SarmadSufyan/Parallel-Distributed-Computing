@@ -41,6 +41,7 @@ def worker(id):
 
 if __name__ == "__main__":
     threads = []
+    total_start = time.time()  # Track full runtime
 
     for i in range(4):
         t = threading.Thread(target=worker, args=(i,))
@@ -50,6 +51,7 @@ if __name__ == "__main__":
     for t in threads:
         t.join()
 
+    total_duration = time.time() - total_start
     print("\nAll workers done (RLock).")
     print("Results Summary:")
     for r in results:
@@ -57,3 +59,5 @@ if __name__ == "__main__":
               f"Largest prime={r[1]['largest_prime']}, "
               f"Math result={r[1]['math_result']:.2f}, "
               f"Time={r[2]:.3f}s")
+
+    print(f"\n✅ Total execution time for all threads: {total_duration:.3f}s")
